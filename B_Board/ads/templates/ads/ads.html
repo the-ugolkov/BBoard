@@ -1,3 +1,5 @@
+{% extends 'ads/default.html' %}
+
 {% block title %}
 Объявления
 {% endblock title %}
@@ -9,7 +11,7 @@
     <hr>
     {% if ads %}
         {% for ad in ads %}
-            <a class="nav-link" href="/ads/{{ad.id}}"><h3>{{ ad.title }}</h3></a>
+            <a class="nav-link" href="/ads/{{ ad.id }}"><h3>{{ ad.title }}</h3></a>
             <h5>Категория: {{ ad.category }} </h5>
             <time>{{ ad.date_create|date:'j M Y' }}</time>
             <h5>{{ ad.text|truncatechars:20 }}</h5>
@@ -37,4 +39,4 @@
        {% endif %}
    {% endif %}
 
-{% endblock content %}
+{% endblock %}

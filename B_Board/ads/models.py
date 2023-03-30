@@ -21,7 +21,7 @@ class AdContent(models.Model):
 
 
 class Response(models.Model):
-    ad = models.ForeignKey(Ad, on_delete=models.CASCADE)
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='response')
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_create = models.DateTimeField(auto_now_add=True)
     text = models.TextField()

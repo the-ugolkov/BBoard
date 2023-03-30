@@ -1,0 +1,15 @@
+{% extends 'ads/default.html' %}
+
+{% block title %}
+{{ ad.title }}
+{% endblock title %}
+
+{% block content %}
+<h3>{{ ad.title }}</h3>
+<h5>{{ ad.date_create|date:'j M Y' }} | Автор:{{ ad.author }}</h5>
+    <hr>
+    <h8>Категория: {{ ad.category }} </h8>
+<hr>
+<h5>{{ ad.text }}</h5>
+<hr>
+{% endblock %}
