@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.urls import reverse
-from django.views.generic import ListView, DetailView, CreateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from ads.forms import AdsForm
 from ads.models import Ad, Response
@@ -24,6 +24,18 @@ class AdCreate(CreateView):
     form_class = AdsForm
     model = Ad
     template_name = 'ads/ads_create.html'
+
+
+class AdUpdate(UpdateView):
+    form_class = AdsForm
+    model = Ad
+    template_name = 'ads/ads_create.html'
+
+
+class AdDelete(DeleteView):
+    model = Ad
+    template_name = 'ads/ad_delete.html'
+    success_url = reverse_lazy('ads_list')
 
 
 # class ResponseList(ListView):
