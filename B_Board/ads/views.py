@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
@@ -20,13 +21,13 @@ class AdDetail(DetailView):
     context_object_name = 'ad'
 
 
-class AdCreate(CreateView):
+class AdCreate(LoginRequiredMixin, CreateView):
     form_class = AdsForm
     model = Ad
     template_name = 'ads/ads_create.html'
 
 
-class AdUpdate(UpdateView):
+class AdUpdate(LoginRequiredMixin, UpdateView):
     form_class = AdsForm
     model = Ad
     template_name = 'ads/ads_create.html'
