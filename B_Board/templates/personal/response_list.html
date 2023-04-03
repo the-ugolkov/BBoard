@@ -1,0 +1,14 @@
+{% extends 'ads/default.html' %}
+
+{% block content %}
+  <h1>Отзывы</h1>
+  <ul>
+  {% for response in responses %}
+    <li>{{ response.author }}</li>
+    <li>{{ response.text }}</li>
+    <hr>
+  {% empty %}
+    <li>Отзывов нет.</li>
+  {% endfor %}
+  </ul>
+{% endblock %}
