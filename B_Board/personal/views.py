@@ -18,10 +18,3 @@ class ResponseList(ListView):
         queryset = Response.objects.filter(ad__author__username=self.request.user.username)
         print(queryset)
         return queryset
-
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     print(queryset.filter(ad__author__username=self.request.user.username))
-    #     return queryset.filter(ad__author__username=self.request.user.username)
-
