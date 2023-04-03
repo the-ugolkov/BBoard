@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DeleteView
 
-from ads.models import Response, Ad
+from ads.models import Response
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -17,7 +17,7 @@ class ResponseList(ListView):
 
     def get_queryset(self):
         queryset = Response.objects.filter(ad__author__username=self.request.user.username)
-        print(queryset)
+        print(self.request)
         return queryset
 
 
