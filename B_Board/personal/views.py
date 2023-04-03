@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
-from django.views.generic import TemplateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DeleteView
 
 from ads.models import Response, Ad
 
@@ -18,3 +19,9 @@ class ResponseList(ListView):
         queryset = Response.objects.filter(ad__author__username=self.request.user.username)
         print(queryset)
         return queryset
+
+
+class ResponseDelete(DeleteView):
+    model = Response
+    template_name = 'personal/response_delete.html'
+    success_url = reverse_lazy('responses')

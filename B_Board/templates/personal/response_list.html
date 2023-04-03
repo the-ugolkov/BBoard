@@ -6,6 +6,7 @@
   {% for response in responses %}
     <li>{{ response.author }}</li>
     <li>{{ response.text }}</li>
+    <a class="nav-link" href="{{ response.id }}/delete ">Удалить</a>
     <hr>
   {% empty %}
     <li>Отзывов нет.</li>
