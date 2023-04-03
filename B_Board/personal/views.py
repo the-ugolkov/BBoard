@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DeleteView
 
 from ads.models import Response
+from personal.forms import ResponseForm
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -11,13 +12,13 @@ class IndexView(LoginRequiredMixin, TemplateView):
 
 
 class ResponseList(ListView):
+    form_class = ResponseForm
     model = Response
     template_name = 'personal/response_list.html'
     context_object_name = 'responses'
 
     def get_queryset(self):
         queryset = Response.objects.filter(ad__author__username=self.request.user.username)
-        print(self.request)
         return queryset
 
 

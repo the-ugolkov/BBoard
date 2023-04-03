@@ -23,7 +23,6 @@ class AdDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         ad = self.get_object().id
-        print(ad)
         responses = Response.objects.filter(ad=ad)
         context['response'] = responses
         return context
@@ -45,3 +44,7 @@ class AdDelete(DeleteView):
     model = Ad
     template_name = 'ads/ad_delete.html'
     success_url = reverse_lazy('ads_list')
+
+
+# def accepted(request):
+#     ad = Ad.objects.get(id=request.)

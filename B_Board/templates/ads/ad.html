@@ -17,9 +17,9 @@
 <a class="nav-link" href="{{ ad.id }}/delete ">Удалить</a>
 <hr>
   <h4>Отзывы</h4>
-    {% for res in response %}
-        <li>{{ res.text }}</li>
-    {% empty %}
-        <li>Отзывов нет.</li>
-    {% endfor %}
+        {% for res in response %}
+                <li>{{ res.text }}</li>
+        {% empty %}
+            <li>Отзывов нет.</li>
+        {% endfor %}
 {% endblock %}

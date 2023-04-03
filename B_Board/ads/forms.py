@@ -1,6 +1,6 @@
 from django import forms
 
-from ads.models import Ad
+from ads.models import Ad, Response
 
 
 class AdsForm(forms.ModelForm):

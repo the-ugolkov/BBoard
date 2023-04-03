@@ -13,10 +13,8 @@ class Ad(models.Model):
     date_create = models.DateTimeField(auto_now_add=True)
     content = models.FileField(upload_to='ad_content/', blank=True)
 
-
     def __str__(self):
         return self.title
-
 
     def get_absolute_url(self):
         return reverse('ad', args=[str(self.id)])
@@ -31,6 +29,7 @@ class Response(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     date_create = models.DateTimeField(auto_now_add=True)
     text = models.TextField()
+    accept = models.BooleanField(default=False)
 
     def __str__(self):
         return self.text[:20]+'...'

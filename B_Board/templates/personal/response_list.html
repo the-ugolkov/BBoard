@@ -4,11 +4,18 @@
   <h1>Отзывы</h1>
   <ul>
   {% for response in responses %}
-    <li>{{ response.author }}</li>
-    <li>{{ response.text }}</li>
+    <h6>Автор: {{ response.author }}</h6>
+    <h7>Отзыв: {{ response.text }}</h7>
+    <h6>Объявление: {{ response.ad.title }}</h6>
     <a class="nav-link" href="{{ response.id }}/delete ">Удалить</a>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Принять</button>
+    </form>
     <hr>
   {% empty %}
+    <hr>
     <li>Отзывов нет.</li>
   {% endfor %}
   </ul>
