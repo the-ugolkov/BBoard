@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -26,3 +27,13 @@ class ResponseDelete(DeleteView):
     model = Response
     template_name = 'personal/response_delete.html'
     success_url = reverse_lazy('responses')
+
+
+@login_required
+def accept(request, pk):
+    res = Response.objects.get(id=pk)
+    res.accepted()
+    print(res.accept)
+
+    message = 'Вы приняли отзыв '
+    return render(request, 'personal/accept.html', {'response': res, 'message': message})

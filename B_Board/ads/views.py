@@ -21,6 +21,7 @@ class AdDetail(DetailView):
     context_object_name = 'ad'
 
     def get_context_data(self, **kwargs):
+        print(self.request.path)
         context = super().get_context_data(**kwargs)
         ad = self.get_object().id
         responses = Response.objects.filter(ad=ad)
@@ -46,5 +47,5 @@ class AdDelete(DeleteView):
     success_url = reverse_lazy('ads_list')
 
 
-# def accepted(request):
-#     ad = Ad.objects.get(id=request.)
+    # message = 'Вы подписаны на категорию '
+    # return render(request, 'subscribe.html', {'category': category, 'message': message})

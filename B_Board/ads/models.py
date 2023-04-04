@@ -33,3 +33,7 @@ class Response(models.Model):
 
     def __str__(self):
         return self.text[:20]+'...'
+
+    def accepted(self):
+        self.accept = True
+        self.save()
