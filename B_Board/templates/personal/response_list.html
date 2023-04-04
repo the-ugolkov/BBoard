@@ -1,7 +1,12 @@
 {% extends 'ads/default.html' %}
 
 {% block content %}
+
   <h1>Отзывы</h1>
+    <form action="" method="get">
+       {{ filterset.form.as_p }}
+        <input type="submit" value="Найти" />
+    </form>
   <ul>
   {% for response in responses %}
     <h6>Автор: {{ response.author }}</h6>
