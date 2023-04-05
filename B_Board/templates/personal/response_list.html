@@ -10,7 +10,8 @@
   <ul>
   {% for response in responses %}
     <h6>Автор: {{ response.author }}</h6>
-    <h7>Отзыв: {{ response.text }}</h7>
+      <time>Дата и время: {{ response.date_create|date:'j.m.y H:i' }}</time>
+    <p>Отзыв: {{ response.text }}</p>
     <h6>Объявление: {{ response.ad.title }}</h6>
     {% if response.accept %}
        <h6>Отзыв принят</h6>
