@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 
-from ads.forms import AdsForm
+from ads.forms import AdsForm, ResForm
 from ads.models import Ad, Response
 
 
@@ -45,6 +45,13 @@ class AdDelete(DeleteView):
     model = Ad
     template_name = 'ads/ad_delete.html'
     success_url = reverse_lazy('ads_list')
+
+
+class ResponseCreate(LoginRequiredMixin, CreateView):
+    form_class = ResForm
+    nodel = Response
+    template_name = 'ads/res_create.html'
+
 
 
     # message = 'Вы подписаны на категорию '
