@@ -40,7 +40,6 @@ class ResponseDelete(DeleteView):
 def accept(request, pk):
     res = Response.objects.get(id=pk)
     res.accepted()
-    print(res.accept)
 
     message = 'Вы приняли отзыв '
     return render(request, 'personal/accept.html', {'response': res, 'message': message})

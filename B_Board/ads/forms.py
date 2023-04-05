@@ -12,4 +12,4 @@ class AdsForm(forms.ModelForm):
 class ResForm(forms.ModelForm):
     class Meta:
         model = Response
-        fields = ['text', 'ad']
+        fields = ['text']
