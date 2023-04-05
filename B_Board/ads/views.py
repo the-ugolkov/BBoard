@@ -22,8 +22,6 @@ class AdDetail(DetailView):
     context_object_name = 'ad'
 
     def get_context_data(self, **kwargs):
-        path = self.request.user
-        print(path)
         context = super().get_context_data(**kwargs)
         ad = self.get_object().id
         responses = Response.objects.filter(ad=ad)
@@ -53,7 +51,6 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
     form_class = ResForm
     nodel = Response
     template_name = 'ads/res_create.html'
-    success_url = reverse_lazy('ads_list')
 
     def form_valid(self, form):
         response = form.save(commit=False)
@@ -65,6 +62,6 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
         response.save()
         return super().form_valid(form)
 
-
-    # message = 'Вы подписаны на категорию '
-    # return render(request, 'subscribe.html', {'category': category, 'message': message})
+    def get_success_url(self):
+        url = '/'.join(self.request.path.split('/')[0:-1])
+        return url
