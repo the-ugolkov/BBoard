@@ -20,7 +20,7 @@
   <h6>Отзывы:</h6>
         {% for res in response %}
             {% if res.accept %}
-                <h8>Автор: {{ res.author }} | Дата: {{ res.date_create|date:'j M Y' }}</h8>
+                <h8>Автор: {{ res.author }} | Дата и время: {{ res.date_create|date:'j.m.y H:i' }}</h8>
                 <h6>{{ res.text }}</h6>
             {% endif %}
         {% endfor %}
