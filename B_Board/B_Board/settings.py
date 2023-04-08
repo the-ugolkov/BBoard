@@ -147,5 +147,5 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 STATIC_URL = '/static/'
-MEDIA_ROOT = os.path.join(BASE_DIR, "ad_content/")
+MEDIA_ROOT = os.path.join(BASE_DIR, "ad_content")
 MEDIA_URL = '/ad_content/'
