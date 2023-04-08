@@ -1,8 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
+from B_Board import settings
 from ads.forms import AdsForm, ResForm
 from ads.models import Ad, Response
 
@@ -25,6 +27,7 @@ class AdDetail(DetailView):
         ad = self.get_object().id
         responses = Response.objects.filter(ad=ad)
         context['response'] = responses
+        context['MEDIA_URL'] = settings.MEDIA_URL
         return context
 
 
@@ -32,6 +35,10 @@ class AdCreate(LoginRequiredMixin, CreateView):
     form_class = AdsForm
     model = Ad
     template_name = 'ads/ads_create.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 class AdUpdate(LoginRequiredMixin, UpdateView):
@@ -64,3 +71,10 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         url = '/'.join(self.request.path.split('/')[0:-1])
         return url
+
+
+# def my_view(request):
+#     context = {
+#         'MEDIA_URL': settings.MEDIA_URL,
+#     }
+#     return render(request, 'ads/ad.html', context)

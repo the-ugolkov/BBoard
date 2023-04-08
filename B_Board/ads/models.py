@@ -11,7 +11,7 @@ class Ad(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=20, choices=CAT)
     date_create = models.DateTimeField(auto_now_add=True)
-    content = models.FileField(upload_to='ad_content/', blank=True)
+    content = models.FileField(upload_to='content/', blank=True)
 
     def __str__(self):
         return self.title
@@ -21,7 +21,7 @@ class Ad(models.Model):
 
 # class AdContent(models.Model):
 #     ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='content')
-#     content = models.FileField(upload_to='ad_content/', blank=True)
+#     content = models.FileField(upload_to='media/', blank=True)
 
 
 class Response(models.Model):

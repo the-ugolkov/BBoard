@@ -12,7 +12,7 @@
 <hr>
 <h5>{{ ad.text }}</h5>
 <hr>
-<img src=" {{ ad.content.name }}" alt="Изображение">
+<img src="{{ ad.content.url }}" alt="{{ ad.title }}">
 <a class="nav-link" href="{{ ad.id }}/update ">Изменить</a>
 <a class="nav-link" href="{{ ad.id }}/delete ">Удалить</a>
 <hr>
