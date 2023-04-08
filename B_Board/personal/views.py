@@ -1,10 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DeleteView
 from django_filters.views import FilterView
 
+from B_Board import settings
 from ads.models import Response
 from personal.filters import ResponseFilter
 from personal.forms import ResponseForm
@@ -20,17 +23,6 @@ class ResponseList(LoginRequiredMixin, FilterView):
     template_name = 'personal/response_list.html'
     context_object_name = 'responses'
     filterset_class = ResponseFilter
-
-    # def get_queryset(self):
-    #     print(self.request.user)
-    #     queryset = Response.objects.filter(ad__author__username=self.request.user)
-    #     self.filterset = ResponseFilter(self.request.GET, queryset)
-    #     return self.filterset.qs
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['filterset'] = self.filterset
-    #     return context
 
     def get_filterset_kwargs(self, filterset_class):
         kwargs = super().get_filterset_kwargs(filterset_class)
@@ -48,6 +40,24 @@ class ResponseDelete(DeleteView):
 def accept(request, pk):
     res = Response.objects.get(id=pk)
     res.accepted()
+
+    html_content = render_to_string(
+        'response_accepted.html',
+        {
+            'response': res,
+            'link': f'{settings.SITE_URL}/ads/{res.ad.pk}',
+        }
+    )
+
+    msg = EmailMultiAlternatives(
+        subject=f'Здравствуй {res.author}',
+        body=res.text,
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[res.author.email],
+    )
+    msg.attach_alternative(html_content, "text/html")
+
+    msg.send()
 
     message = 'Вы приняли отзыв '
     return render(request, 'personal/accept.html', {'response': res, 'message': message})

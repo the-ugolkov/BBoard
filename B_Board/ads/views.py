@@ -81,7 +81,7 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
             subject=f'{response.author} {response.date_create.strftime("%Y-%M-%d")}',
             body=response.text,
             from_email= settings.DEFAULT_FROM_EMAIL,
-            to=[response.author.email],
+            to=[response.ad.author.email],
         )
         msg.attach_alternative(html_content, "text/html")
 
@@ -91,10 +91,3 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         url = '/'.join(self.request.path.split('/')[0:-1])
         return url
-
-
-# def my_view(request):
-#     context = {
-#         'MEDIA_URL': settings.MEDIA_URL,
-#     }
-#     return render(request, 'ads/ad.html', context)
