@@ -1,16 +1,14 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.mail import EmailMultiAlternatives
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DeleteView
 from django_filters.views import FilterView
 
-from B_Board import settings
 from ads.models import Response
 from personal.filters import ResponseFilter
 from personal.forms import ResponseForm
+from personal.tasks import send_message_accept
 
 
 class IndexView(LoginRequiredMixin, TemplateView):
@@ -41,23 +39,7 @@ def accept(request, pk):
     res = Response.objects.get(id=pk)
     res.accepted()
 
-    html_content = render_to_string(
-        'response_accepted.html',
-        {
-            'response': res,
-            'link': f'{settings.SITE_URL}/ads/{res.ad.pk}',
-        }
-    )
-
-    msg = EmailMultiAlternatives(
-        subject=f'Здравствуй {res.author}',
-        body=res.text,
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[res.author.email],
-    )
-    msg.attach_alternative(html_content, "text/html")
-
-    msg.send()
+    send_message_accept(res.pk)
 
     message = 'Вы приняли отзыв '
     return render(request, 'personal/accept.html', {'response': res, 'message': message})
