@@ -9,6 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from B_Board import settings
 from ads.forms import AdsForm, ResForm
 from ads.models import Ad, Response
+from ads.tasks import send_message_res
 
 
 class AdsList(ListView):
@@ -68,24 +69,7 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
             response.ad = Ad.objects.get(id=pk)
             response.author = User.objects.get(username=username)
         response.save()
-
-        html_content = render_to_string(
-            'response_created.html',
-            {
-                'response': response,
-                'link': f'{settings.SITE_URL}/accounts/responses/',
-            }
-        )
-
-        msg = EmailMultiAlternatives(
-            subject=f'{response.author} {response.date_create.strftime("%Y-%M-%d")}',
-            body=response.text,
-            from_email= settings.DEFAULT_FROM_EMAIL,
-            to=[response.ad.author.email],
-        )
-        msg.attach_alternative(html_content, "text/html")
-
-        msg.send()
+        send_message_res(response.pk)
         return super().form_valid(form)
 
     def get_success_url(self):
