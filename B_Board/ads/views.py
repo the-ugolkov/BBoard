@@ -66,7 +66,7 @@ class ResponseCreate(LoginRequiredMixin, CreateView):
             response.ad = Ad.objects.get(id=pk)
             response.author = User.objects.get(username=username)
         response.save()
-        send_message_res(response.pk)
+        send_message_res.apply_async([response.pk], countdown=5)
         return super().form_valid(form)
 
     def get_success_url(self):

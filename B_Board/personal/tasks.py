@@ -1,10 +1,11 @@
+from celery import shared_task
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from ads.models import Response
 
-
+@shared_task
 def send_message_accept(pk):
     res = Response.objects.get(pk=pk)
     html_content = render_to_string(

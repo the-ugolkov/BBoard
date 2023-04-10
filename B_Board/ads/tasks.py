@@ -1,12 +1,13 @@
+from celery import shared_task
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from ads.models import Response
 
-
-def send_message_res(oid):
-    response = Response.objects.get(pk=oid)
+@shared_task
+def send_message_res(pk):
+    response = Response.objects.get(pk=pk)
     html_content = render_to_string(
         'response_created.html',
         {
