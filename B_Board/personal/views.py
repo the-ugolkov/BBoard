@@ -53,9 +53,8 @@ class AccountDetailActivate(DetailView):
     def post(self, request, pk):
         user = User.objects.get(pk=pk)
         activation_code = request.POST.get('activation_code')
-        # code = User.objects.filter(activation_code=activation_code)
-        user_code = '123'
-        if activation_code == user_code:
+        code = user.codes.latest('created_at').code_value
+        if activation_code == code:
             user.is_active = True
             user.save()
             return redirect('account')

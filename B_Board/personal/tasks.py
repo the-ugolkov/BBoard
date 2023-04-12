@@ -1,3 +1,5 @@
+from random import randint
+
 from celery import shared_task
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -5,6 +7,8 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 
 from ads.models import Response
+from personal.models import Code
+
 
 @shared_task
 def send_message_accept(pk):
@@ -30,8 +34,9 @@ def send_message_accept(pk):
 
 @shared_task
 def send_message_singup(pk):
-    code = '123'
+    code = randint(1000, 9999)
     user = User.objects.get(pk=pk)
+    Code.objects.create(user=user, code_value=code)
     html_content = render_to_string(
         'email_activate.html',
         {

@@ -19,10 +19,6 @@ class Ad(models.Model):
     def get_absolute_url(self):
         return reverse('ad', args=[str(self.id)])
 
-# class AdContent(models.Model):
-#     ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='content')
-#     content = models.FileField(upload_to='media/', blank=True)
-
 
 class Response(models.Model):
     ad = models.ForeignKey(Ad, on_delete=models.CASCADE, related_name='response')
@@ -32,7 +28,7 @@ class Response(models.Model):
     accept = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.text[:20]+'...'
+        return self.text[:20] + '...'
 
     def accepted(self):
         self.accept = True
