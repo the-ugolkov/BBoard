@@ -28,22 +28,24 @@ def send_message_accept(pk):
     msg.send()
 
 
-# @shared_task
-# def send_message_singup(pk):
-#     user = User.objects.get(pk=pk)
-#     html_content = render_to_string(
-#         'enail_activate.html',
-#         {
-#             'user': user,
-#             'link': f'{settings.SITE_URL}/accounts/{user.pk}/activate/',
-#         }
-#     )
-#
-#     msg = EmailMultiAlternatives(
-#         subject=f'Здравствуй {user}',
-#         from_email=settings.DEFAULT_FROM_EMAIL,
-#         to=[user.email],
-#     )
-#     msg.attach_alternative(html_content, "text/html")
-#
-#     msg.send()
+@shared_task
+def send_message_singup(pk):
+    code = '123'
+    user = User.objects.get(pk=pk)
+    html_content = render_to_string(
+        'email_activate.html',
+        {
+            'user': user,
+            'link': f'{settings.SITE_URL}/accounts/{user.pk}',
+            'code': code,
+        }
+    )
+
+    msg = EmailMultiAlternatives(
+        subject=f'Здравствуй {user}',
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[user.email],
+    )
+    msg.attach_alternative(html_content, "text/html")
+
+    msg.send()

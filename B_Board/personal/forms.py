@@ -15,7 +15,7 @@ class ResponseForm(forms.ModelForm):
 class MySignupForm(SignupForm):
     def save(self, request):
         user = super(MySignupForm, self).save(request)
+        send_message_singup.apply_async([user.pk], countdown=2)
         user.is_active = False
         user.save()
-        # send_message_singup.apply_async([user.pk], countdown=2)
         return user
