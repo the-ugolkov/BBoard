@@ -1,6 +1,7 @@
 from allauth.account.forms import SignupForm
 from django import forms
 from ads.models import Response
+from personal.tasks import send_message_singup
 
 
 class ResponseForm(forms.ModelForm):
@@ -16,4 +17,5 @@ class MySignupForm(SignupForm):
         user = super(MySignupForm, self).save(request)
         user.is_active = False
         user.save()
+        # send_message_singup.apply_async([user.pk], countdown=2)
         return user

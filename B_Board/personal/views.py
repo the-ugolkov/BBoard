@@ -1,8 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.shortcuts import render
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DeleteView
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, ListView, DeleteView, DetailView
 from django_filters.views import FilterView
 
 from ads.models import Response
@@ -43,3 +44,21 @@ def accept(request, pk):
 
     message = 'Вы приняли отзыв '
     return render(request, 'personal/accept.html', {'response': res, 'message': message})
+
+
+class AccountDetailActivate(DetailView):
+    model = User
+    template_name = 'activate.html'
+
+    def post(self, request, pk):
+        user = User.objects.get(pk=pk)
+        activation_code = request.POST.get('activation_code')
+        # code = User.objects.filter(activation_code=activation_code)
+        user_code = '123'
+        if activation_code == user_code:
+            user.is_active = True
+            user.save()
+            return redirect('account')
+        else:
+            return self.form_invalid(None)
+
