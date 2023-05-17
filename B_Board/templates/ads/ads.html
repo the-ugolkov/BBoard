@@ -11,10 +11,12 @@
     <hr>
     {% if ads %}
         {% for ad in ads %}
+            <div class="block-ad">
             <a class="nav-link" href="/ads/{{ ad.id }}"><h3>{{ ad.title }}</h3></a>
             <h5>Категория: {{ ad.category }} </h5>
             <time>{{ ad.date_create|date:'j M Y' }}</time>
             <h5>{{ ad.text|truncatechars:20 }}</h5>
+            </div>
         {% endfor %}
     {% else %}
         <h4>Объявлений нет!</h4>

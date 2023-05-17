@@ -151,6 +151,7 @@ ACCOUNT_FORMS = {'signup': 'personal.forms.MySignupForm'}
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = '/media/'
 
