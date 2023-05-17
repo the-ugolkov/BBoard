@@ -37,6 +37,7 @@ h2 {
     font-size: medium;
     color: #000;
     text-decoration: none;
+    text-transform: uppercase;
 }
 
 .nav-link:hover {
